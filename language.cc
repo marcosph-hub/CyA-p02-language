@@ -2,9 +2,15 @@
 
 Language::Language() {
   language = {};
+  identifier = "";
 }
 
 Language::Language(std::vector<Word> external_language) {
+  language = external_language;
+}
+
+Language::Language(std::string external_identifier, std::vector<Word> external_language) {
+  identifier = external_identifier;
   language = external_language;
 }
 
@@ -14,6 +20,10 @@ void Language::setLanguage(std::vector<Word> external_language) {
 
 std::vector<Word> Language::getLanguage() {
   return language;
+}
+
+std::string Language::getIdentifier() {
+  return identifier;
 }
 
 Language Language::Concatenation(Language file1_language, Language file2_language) {
