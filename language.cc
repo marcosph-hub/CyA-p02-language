@@ -59,19 +59,22 @@ Language Language::Intersection(Language file1_language, Language file2_language
 
 //if( file1_language.getLanguage()[language1_index].getWord() != file2_language.getLanguage()[language2_index].getWord())
 Language Language::Difference(Language file1_language, Language file2_language) {
-  Language difference_result;
+  Language intersection_result;
   std::vector<Word> word_vector_to_set;
-
   for (unsigned int language1_index = 0; language1_index < file1_language.getLanguage().size(); ++language1_index) {
+    bool compare_flag = false;
     for (unsigned int language2_index = 0; language2_index < file2_language.getLanguage().size(); ++language2_index) {
-      int compare_flag = file1_language.getLanguage()[language1_index].getWord().compare(file2_language.getLanguage()[language2_index].getWord());
-      if (compare_flag != 0) {
-        word_vector_to_set.push_back(file1_language.getLanguage()[language1_index].getWord());
+      
+      if( file1_language.getLanguage()[language1_index].getWord() == file2_language.getLanguage()[language2_index].getWord()) {
+        compare_flag = true;
       }
     }
+    if (!compare_flag) {
+      word_vector_to_set.push_back(file1_language.getLanguage()[language1_index].getWord());
+    }
   }
-  difference_result.setLanguage(word_vector_to_set);
-  return difference_result;
+  intersection_result.setLanguage(word_vector_to_set);
+  return intersection_result;
 }
 
 Language Language::Inverse(Language file1_language) {
@@ -82,6 +85,19 @@ Language Language::Inverse(Language file1_language) {
   }
   inverse_result.setLanguage(word_vector_to_set);
   return inverse_result;
+}
+
+Language Language::Potential(Language file1_language, int exponente) {
+
+  Language aux = file1_language;
+  if (exponente == 0) {
+    aux = {};
+  } else if (exponente > 1) {
+    for (int i = 0; i < exponente-1; ++i) {
+      aux = Concatenation(file1_language, aux);
+    }
+  }
+  return aux;
 }
 
 std::ostream& operator<<(std::ostream &os, Language &summoner_language) {

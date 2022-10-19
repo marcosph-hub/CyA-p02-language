@@ -98,8 +98,11 @@ void FileManagment::UnaryOperations() {
     }
       break;
     case 6: {
+      int exponente;
+      std::cout << "exponente" << std::endl;
+      std::cin >>exponente;
       for (unsigned int data_vector_index = 0; data_vector_index < data_vector_file1.size(); ++data_vector_index) {
-        WriteOutput(result.Inverse(data_vector_file1[data_vector_index].second));
+        WriteOutput(result.Potential(data_vector_file1[data_vector_index].second, exponente));
       }
     }
     break;
@@ -156,7 +159,7 @@ std::pair<Alphabet,Language> FileManagment::ObtainFileData(std::string ext_filel
   alphabet.setAlphabet(alphabet_to_set);
   alphabet_to_set.clear();
 
-  for (int language_index = second_brace + 1; language_index < second_close_brace; ++language_index) {
+  for (int language_index = second_brace + 2; language_index < second_close_brace ; ++language_index) {
     while (file_line[language_index] != ' ') {
       word_to_set.push_back(file_line[language_index]);
       language_index++;
